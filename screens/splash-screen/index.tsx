@@ -17,12 +17,12 @@ const SplashScreenWithLeftBackground = () => {
       {colorScheme === "dark" ? (
         <Image
           style={styles.tinyLogo}
-          source={require("@/assets/images/logo-vaultid.png")}
+          source={require("@/assets/images/logo-scam-clear.png")}
         />
       ) : (
         <Image
           style={styles.tinyLogo}
-          source={require("@/assets/images/logo-vaultid.png")}
+          source={require("@/assets/images/logo-scam-clear.png")}
         />
       )}
       <VStack className="w-full" space="lg">

@@ -4,7 +4,7 @@
     "slug": "scamclear",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/images/logo-vaultid.png",
+    "icon": "./assets/images/logo-scam-clear.png",
     "scheme": "scamclearapp",
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,

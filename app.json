@@ -1,7 +1,7 @@
 {
   "expo": {
     "name": "ScamClear",
-    "slug": "scam-clear-app",
+    "slug": "scamclear",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/logo-vaultid.png",
@@ -18,7 +18,11 @@
         "backgroundColor": "#ffffff"
       },
       "edgeToEdgeEnabled": true,
-      "package": "com.root.scamclear.scamclearapp"
+      "package": "com.root.scamclear.scamclearapp",
+      "permissions": [
+        "android.permission.CAMERA",
+        "android.permission.RECORD_AUDIO"
+      ]
     },
     "web": {
       "bundler": "metro",
@@ -61,9 +65,9 @@
     "extra": {
       "router": {},
       "eas": {
-        "projectId": "11253914-fbc4-4cad-a7f9-7a273e78c1b8"
+        "projectId": "2e4fc6a3-b788-4f9e-bd45-2ec31d89aa00"
       }
     },
-    "owner": "root.scamclear"
+    "owner": "scam-clear"
   }
 }

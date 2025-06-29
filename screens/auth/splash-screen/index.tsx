@@ -1,11 +1,7 @@
 import { Button, ButtonText } from "@/components/ui/button";
-import { Icon } from "@/components/ui/icon";
 import { VStack } from "@/components/ui/vstack";
 import { useColorScheme } from "nativewind";
-import {
-  GluestackIcon,
-  GluestackIconDark,
-} from "./assets/icons/gluestack-icon";
+import { Image, StyleSheet } from 'react-native';
 
 import { useRouter } from "@unitools/router";
 import { AuthLayout } from "../layout";
@@ -19,9 +15,15 @@ const SplashScreenWithLeftBackground = () => {
       space="lg"
     >
       {colorScheme === "dark" ? (
-        <Icon as={GluestackIconDark} className="w-[219px] h-10" />
+<Image
+        style={styles.tinyLogo}
+        source={require('@expo/snack-static/react-native-logo.png')}
+      />
       ) : (
-        <Icon as={GluestackIcon} className="w-[219px] h-10" />
+<Image
+        style={styles.tinyLogo}
+        source={require('@expo/snack-static/react-native-logo.png')}
+      />
       )}
       <VStack className="w-full" space="lg">
         <Button
@@ -51,3 +53,18 @@ export const SplashScreen = () => {
     </AuthLayout>
   );
 };
+
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+  },
+  tinyLogo: {
+    width: 50,
+    height: 50,
+  },
+  logo: {
+    width: 66,
+    height: 58,
+  },
+});

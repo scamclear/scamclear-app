@@ -1,4 +1,4 @@
-import { Button, ButtonIcon, ButtonText } from "@/components/ui/button";
+import { Button, ButtonText } from "@/components/ui/button";
 import {
   Checkbox,
   CheckboxIcon,
@@ -39,7 +39,6 @@ import { AppState, Keyboard } from "react-native";
 import { z } from "zod";
 import { supabase } from "../../../lib/supabase";
 import { AuthLayout } from "../layout";
-import { GoogleIcon } from "./assets/icons/google";
 
 // Tells Supabase Auth to continuously refresh the session automatically if
 // the app is in the foreground. When this is added, you will continue to receive
@@ -183,7 +182,7 @@ const SignUpWithLeftBackground = () => {
           <Heading className="md:text-center" size="3xl">
             Sign up
           </Heading>
-          <Text>Sign up and start using gluestack</Text>
+          <Text>Sign up and start using Scam Clear</Text>
         </VStack>
       </VStack>
       <VStack className="w-full">
@@ -349,7 +348,7 @@ const SignUpWithLeftBackground = () => {
           <Button className="w-full" onPress={handleSubmit(onSubmit)}>
             <ButtonText className="font-medium">Sign up</ButtonText>
           </Button>
-          <Button
+          {/* <Button
             variant="outline"
             action="secondary"
             className="w-full gap-1"
@@ -359,7 +358,7 @@ const SignUpWithLeftBackground = () => {
               Continue with Google
             </ButtonText>
             <ButtonIcon as={GoogleIcon} />
-          </Button>
+          </Button> */}
         </VStack>
         <HStack className="self-center" space="sm">
           <Text size="md">Already have an account?</Text>

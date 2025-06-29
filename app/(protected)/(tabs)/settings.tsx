@@ -1,75 +1,135 @@
-import { Image } from 'expo-image';
-import { Platform, StyleSheet } from 'react-native';
+import { useEffect, useState } from "react";
+import { Alert, StyleSheet, View } from "react-native";
 
-// import { HelloWave } from '@/components/HelloWave';
-import ParallaxScrollView from '@/components/ParallaxScrollView';
-import { ThemedText } from '@/components/ThemedText';
-import { ThemedView } from '@/components/ThemedView';
+import { supabase } from "@/lib/supabase";
+import { Session } from "@supabase/supabase-js";
+import { Image } from "expo-image";
 
-export default function HomeScreen() {
+import ParallaxScrollView from "@/components/ParallaxScrollView";
+import { ThemedText } from "@/components/ThemedText";
+import { ThemedView } from "@/components/ThemedView";
+import { Button, ButtonText } from "@/components/ui/button";
+import { Input, InputField } from "@/components/ui/input";
+
+export default function SettingsScreen() {
+  const [loading, setLoading] = useState(true);
+  const [username, setUsername] = useState("");
+  const [website, setWebsite] = useState("");
+  const [avatarUrl, setAvatarUrl] = useState("");
+  const [session, setSession] = useState<Session | null>(null);
+
+  useEffect(() => {
+    supabase.auth.getSession().then(({ data: { session } }) => {
+      setSession(session);
+    });
+    supabase.auth.onAuthStateChange((_event, session) => {
+      setSession(session);
+    });
+  }, []);
+
+  useEffect(() => {
+    if (session) getProfile();
+  }, [session]);
+
+  async function getProfile() {
+    try {
+      console.log("Getting profile for user:", session?.user?.id);
+      setLoading(true);
+      if (!session?.user) throw new Error("No user on the session!");
+      const { data, error, status } = await supabase
+        .from("profiles")
+        .select(`username, website, avatar_url`)
+        .eq("id", session?.user.id)
+        .single();
+      if (error && status !== 406) {
+        throw error;
+      }
+      if (data) {
+        setUsername(data.username);
+        setWebsite(data.website);
+        setAvatarUrl(data.avatar_url);
+      }
+    } catch (error) {
+      if (error instanceof Error) {
+        Alert.alert(error.message);
+      }
+    } finally {
+      setLoading(false);
+    }
+  }
+
   return (
     <ParallaxScrollView
-      headerBackgroundColor={{ light: '#A1CEDC', dark: '#1D3D47' }}
+      headerBackgroundColor={{ light: "#A1CEDC", dark: "#1D3D47" }}
       headerImage={
-        <Image
-          source={require('@/assets/images/partial-react-logo.png')}
-          style={styles.reactLogo}
-        />
-      }>
-      <ThemedView style={styles.titleContainer}>
-        <ThemedText type="title">Welcome!</ThemedText>
-        {/* <HelloWave /> */}
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Step 1: Try it</ThemedText>
-        <ThemedText>
-          Edit <ThemedText type="defaultSemiBold">app/(tabs)/index.tsx</ThemedText> to see changes.
-          Press{' '}
-          <ThemedText type="defaultSemiBold">
-            {Platform.select({
-              ios: 'cmd + d',
-              android: 'cmd + m',
-              web: 'F12',
-            })}
-          </ThemedText>{' '}
-          to open developer tools.
-        </ThemedText>
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Step 2: Explore</ThemedText>
-        <ThemedText>
-          {`Tap the Explore tab to learn more about what's included in this starter app.`}
-        </ThemedText>
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Step 3: Get a fresh start</ThemedText>
-        <ThemedText>
-          {`When you're ready, run `}
-          <ThemedText type="defaultSemiBold">npm run reset-project</ThemedText> to get a fresh{' '}
-          <ThemedText type="defaultSemiBold">app</ThemedText> directory. This will move the current{' '}
-          <ThemedText type="defaultSemiBold">app</ThemedText> to{' '}
-          <ThemedText type="defaultSemiBold">app-example</ThemedText>.
-        </ThemedText>
+        <Image source={require("@/assets/images/partial-react-logo.png")} />
+      }
+    >
+      <ThemedView style={styles.container}>
+        <ThemedText type="title">Settings</ThemedText>
+        <View style={styles.container}>
+          <View style={[styles.verticallySpaced, styles.mt20]}>
+            <Input
+              variant="outline"
+              size="md"
+              isDisabled={true}
+              isInvalid={false}
+              isReadOnly={false}
+            >
+              <InputField value={session?.user?.email} />
+            </Input>
+          </View>
+          <View style={styles.verticallySpaced}>
+            <Input
+              variant="outline"
+              size="md"
+              isDisabled={true}
+              isInvalid={false}
+              isReadOnly={false}
+            >
+              <InputField
+                value={username || ""}
+                onChangeText={(text) => setUsername(text)}
+              />
+            </Input>
+          </View>
+
+          <View style={[styles.verticallySpaced, styles.mt20]}>
+            {/* <Button
+          title={loading ? 'Loading ...' : 'Update'}
+          onPress={() => updateProfile({ username, website, avatar_url: avatarUrl })}
+          disabled={loading}
+        /> */}
+          </View>
+          <View style={styles.verticallySpaced}>
+            {/* <Button title="Sign Out" onPress={() => supabase.auth.signOut()} /> */}
+
+            <Button
+              size="md"
+              variant="solid"
+              action="negative"
+              onPress={() => supabase.auth.signOut()}
+            >
+              <ButtonText>Sign out</ButtonText>
+            </Button>
+          </View>
+        </View>
       </ThemedView>
     </ParallaxScrollView>
   );
 }
 
 const styles = StyleSheet.create({
-  titleContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 8,
+  container: {
+    marginTop: 40,
+    padding: 12,
   },
-  stepContainer: {
-    gap: 8,
-    marginBottom: 8,
+  verticallySpaced: {
+    paddingTop: 4,
+    paddingBottom: 4,
+    alignSelf: "stretch",
   },
-  reactLogo: {
-    height: 178,
-    width: 290,
-    bottom: 0,
-    left: 0,
-    position: 'absolute',
+  mt20: {
+    marginTop: 20,
   },
 });

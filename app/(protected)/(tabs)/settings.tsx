@@ -12,10 +12,10 @@ import { Button, ButtonText } from "@/components/ui/button";
 import { Input, InputField } from "@/components/ui/input";
 
 export default function SettingsScreen() {
-  const [loading, setLoading] = useState(true);
+  const [, setLoading] = useState(true);
   const [username, setUsername] = useState("");
-  const [website, setWebsite] = useState("");
-  const [avatarUrl, setAvatarUrl] = useState("");
+  const [, setWebsite] = useState("");
+  const [, setAvatarUrl] = useState("");
   const [session, setSession] = useState<Session | null>(null);
 
   useEffect(() => {

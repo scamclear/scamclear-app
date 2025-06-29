@@ -479,8 +479,8 @@ const MainContent = () => {
               <Avatar size="2xl" className="bg-primary-600">
                 <AvatarImage
                   alt="Profile Image"
-                  height={"100%"}
-                  width={"100%"}
+                  height={100}
+                  width={100}
                   source={require("@/assets/profile-screens/profile/image.png")}
                 />
                 <AvatarBadge />
@@ -1538,7 +1538,7 @@ export const Profile = () => {
       <DashboardLayout title="Company Name" isSidebarVisible={true}>
         <MainContent />
       </DashboardLayout>
-      {/* <MobileFooter footerIcons={bottomTabsList} /> */}
+      <MobileFooter footerIcons={bottomTabsList} />
     </SafeAreaView>
   );
 };

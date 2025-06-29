@@ -14,7 +14,7 @@ import { Input, InputField, InputIcon, InputSlot } from "@/components/ui/input";
 import { LinkText } from "@/components/ui/link";
 import { Pressable } from "@/components/ui/pressable";
 import { Text } from "@/components/ui/text";
-import { useToast } from "@/components/ui/toast";
+// import { useToast } from "@/components/ui/toast";
 import { VStack } from "@/components/ui/vstack";
 import { useAuth } from "@/context/supabase-provider";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -42,7 +42,7 @@ const LoginWithLeftBackground = () => {
   const {
     control,
     handleSubmit,
-    reset,
+    // reset,
     formState: { errors },
     // form
   } = useForm<z.infer<typeof loginSchema>>({
@@ -82,8 +82,8 @@ const LoginWithLeftBackground = () => {
   // } = useForm<LoginSchemaType>({
   //   resolver: zodResolver(loginSchema),
   // });
-  const toast = useToast();
-  const [validated, setValidated] = useState({
+  // const toast = useToast();
+  const [validated, ] = useState({
     emailValid: true,
     passwordValid: true,
   });

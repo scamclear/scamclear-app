@@ -20,13 +20,13 @@ import { isWeb } from "@gluestack-ui/nativewind-utils/IsWeb";
 import { useRouter } from "@unitools/router";
 import type { LucideIcon } from "lucide-react-native";
 import { useState } from "react";
-import { Platform } from "react-native";
+// import { Platform } from "react-native";
 import { CalendarIcon } from "./assets/icons/calendar";
 import { GlobeIcon } from "./assets/icons/globe";
 import { HeartIcon } from "./assets/icons/heart";
 import { HomeIcon } from "./assets/icons/home";
 import { InboxIcon } from "./assets/icons/inbox";
-import { ProfileIcon } from "./assets/icons/profile";
+// import { ProfileIcon } from "./assets/icons/profile";
 type MobileHeaderProps = {
   title: string;
 };
@@ -53,33 +53,33 @@ const list: Icons[] = [
     iconName: HeartIcon,
   },
 ];
-type BottomTabs = {
-  iconName: LucideIcon | typeof Icon;
-  iconText: string;
-};
-const bottomTabsList: BottomTabs[] = [
-  {
-    iconName: HomeIcon,
-    iconText: "Home",
-  },
+// type BottomTabs = {
+//   iconName: LucideIcon | typeof Icon;
+//   iconText: string;
+// };
+// const bottomTabsList: BottomTabs[] = [
+//   {
+//     iconName: HomeIcon,
+//     iconText: "Home",
+//   },
 
-  {
-    iconName: GlobeIcon,
-    iconText: "Community",
-  },
-  {
-    iconName: InboxIcon,
-    iconText: "Inbox",
-  },
-  {
-    iconName: HeartIcon,
-    iconText: "Favourite",
-  },
-  {
-    iconName: ProfileIcon,
-    iconText: "Profile",
-  },
-];
+//   {
+//     iconName: GlobeIcon,
+//     iconText: "Community",
+//   },
+//   {
+//     iconName: InboxIcon,
+//     iconText: "Inbox",
+//   },
+//   {
+//     iconName: HeartIcon,
+//     iconText: "Favourite",
+//   },
+//   {
+//     iconName: ProfileIcon,
+//     iconText: "Profile",
+//   },
+// ];
 
 interface CardData {
   bannerUri: string;
@@ -202,7 +202,7 @@ const ColleaguesCards: ColleaguesCardData[] = [
 ];
 
 const Sidebar = () => {
-  const router = useRouter();
+  // const router = useRouter();
   const [selectedIndex, setSelectedIndex] = useState<number>(0);
   const handlePress = (index: number) => {
     setSelectedIndex(index);
@@ -262,42 +262,42 @@ const DashboardLayout = (props: any) => {
   );
 };
 
-function MobileFooter({ footerIcons }: { footerIcons: any }) {
-  const router = useRouter();
-  return (
-    <HStack
-      className={cn(
-        "bg-background-0 justify-between w-full absolute left-0 bottom-0 right-0 p-3 overflow-hidden items-center  border-t-border-300  md:hidden border-t",
-        { "pb-5": Platform.OS === "ios" },
-        { "pb-5": Platform.OS === "android" }
-      )}
-    >
-      {footerIcons.map(
-        (
-          item: { iconText: string; iconName: any },
-          index: React.Key | null | undefined
-        ) => {
-          return (
-            <Pressable
-              className="px-0.5 flex-1 flex-col items-center"
-              key={index}
-              onPress={() => router.push("/dashboard/dashboard-layout")}
-            >
-              <Icon
-                as={item.iconName}
-                size="md"
-                className="h-[32px] w-[65px]"
-              />
-              <Text className="text-xs text-center text-typography-600">
-                {item.iconText}
-              </Text>
-            </Pressable>
-          );
-        }
-      )}
-    </HStack>
-  );
-}
+// function MobileFooter({ footerIcons }: { footerIcons: any }) {
+//   const router = useRouter();
+//   return (
+//     <HStack
+//       className={cn(
+//         "bg-background-0 justify-between w-full absolute left-0 bottom-0 right-0 p-3 overflow-hidden items-center  border-t-border-300  md:hidden border-t",
+//         { "pb-5": Platform.OS === "ios" },
+//         { "pb-5": Platform.OS === "android" }
+//       )}
+//     >
+//       {footerIcons.map(
+//         (
+//           item: { iconText: string; iconName: any },
+//           index: React.Key | null | undefined
+//         ) => {
+//           return (
+//             <Pressable
+//               className="px-0.5 flex-1 flex-col items-center"
+//               key={index}
+//               onPress={() => router.push("/dashboard/dashboard-layout")}
+//             >
+//               <Icon
+//                 as={item.iconName}
+//                 size="md"
+//                 className="h-[32px] w-[65px]"
+//               />
+//               <Text className="text-xs text-center text-typography-600">
+//                 {item.iconText}
+//               </Text>
+//             </Pressable>
+//           );
+//         }
+//       )}
+//     </HStack>
+//   );
+// }
 
 function WebHeader(props: HeaderProps) {
   return (

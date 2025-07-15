@@ -64,7 +64,8 @@
         {
           "launchMode": "most-recent"
         }
-      ]
+      ],
+      "expo-font"
     ],
     "experiments": {
       "typedRoutes": true
@@ -75,6 +76,6 @@
         "projectId": "11253914-fbc4-4cad-a7f9-7a273e78c1b8"
       }
     },
-    "owner": "scam-clear"
+    "owner": "root.scamclear"
   }
 }

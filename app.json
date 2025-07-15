@@ -10,6 +10,7 @@
     "newArchEnabled": true,
     "ios": {
       "supportsTablet": true,
+      "usesIcloudStorage": true,
       "bundleIdentifier": "com.root.scamclear.scamclearapp"
     },
     "android": {

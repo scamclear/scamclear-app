@@ -12,7 +12,7 @@ import { StyleSheet } from 'react-native';
 
 
 export default function HomeScreen() {
-    const [session, setSession] = useState<Session | null>(null)
+    const [, setSession] = useState<Session | null>(null)
   useEffect(() => {
     supabase.auth.getSession().then(({ data: { session } }) => {
       setSession(session)

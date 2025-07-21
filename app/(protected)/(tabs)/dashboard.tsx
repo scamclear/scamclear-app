@@ -87,7 +87,7 @@ export default function Dashboard() {
         <View style={styles.container}>
           <View style={[styles.verticallySpaced, styles.mt20]}>
             <Button onPress={() => setShowActionsheet(true)}>
-              <ButtonText>Open</ButtonText>
+              <ButtonText>Validate invoice</ButtonText>
             </Button>
             <Actionsheet isOpen={showActionsheet} onClose={handleClose}>
               <ActionsheetBackdrop />
@@ -125,7 +125,7 @@ export default function Dashboard() {
                       //   updateProfile({ username, website, avatar_url: url })
                     }}
                   />
-                  <Button
+                  {/* <Button
                     className="w-full"
                     variant="solid"
                     // isDisabled
@@ -133,7 +133,7 @@ export default function Dashboard() {
                     onPress={pickInvoice}
                   >
                     <ButtonText>Uploadaaa</ButtonText>
-                  </Button> 
+                  </Button>  */}
                   {/* <Button className="w-full" onPress={pickInvoice}>
                     <ButtonText>Browse files</ButtonText>
                   </Button>

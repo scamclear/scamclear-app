@@ -1,11 +1,6 @@
-import {
-  Avatar,
-  AvatarBadge,
-  AvatarFallbackText,
-  AvatarImage,
-} from "@/components/ui/avatar";
+import { Avatar, AvatarBadge, AvatarImage } from "@/components/ui/avatar";
 import { Box } from "@/components/ui/box";
-import { Button, ButtonIcon, ButtonText } from "@/components/ui/button";
+import { Button, ButtonText } from "@/components/ui/button";
 import { Center } from "@/components/ui/center";
 import { Divider } from "@/components/ui/divider";
 import {
@@ -24,11 +19,7 @@ import {
   ChevronLeftIcon,
   ChevronRightIcon,
   CloseIcon,
-  EditIcon,
-  Icon,
-  MenuIcon,
-  PhoneIcon,
-  SettingsIcon,
+  Icon
 } from "@/components/ui/icon";
 import { Input, InputField } from "@/components/ui/input";
 import {
@@ -55,7 +46,6 @@ import {
   SelectTrigger,
 } from "@/components/ui/select";
 
-
 import { Text } from "@/components/ui/text";
 import { VStack } from "@/components/ui/vstack";
 import { cn } from "@gluestack-ui/nativewind-utils/cn";
@@ -63,64 +53,37 @@ import { isWeb } from "@gluestack-ui/nativewind-utils/IsWeb";
 import { zodResolver } from "@hookform/resolvers/zod";
 import Image from "@unitools/image";
 import { useRouter } from "@unitools/router";
-import { AlertCircle, type LucideIcon } from "lucide-react-native";
-import React, { useRef, useState } from "react";
+import { Link, useNavigation } from "expo-router";
+import { AlertCircle, BadgeCheck, type LucideIcon } from "lucide-react-native";
+import React, { useEffect, useRef, useState } from "react";
 import { Controller, useForm } from "react-hook-form";
 import { Keyboard, Platform } from "react-native";
 import { z } from "zod";
 import { CameraSparklesIcon } from "./assets/icons/camera-sparkles";
-import { DownloadIcon } from "./assets/icons/download";
 import { EditPhotoIcon } from "./assets/icons/edit-photo";
-import { FaqIcon } from "./assets/icons/faq";
 import { GlobeIcon } from "./assets/icons/globe";
 import { HeartIcon } from "./assets/icons/heart";
 import { HomeIcon } from "./assets/icons/home";
 import { InboxIcon } from "./assets/icons/inbox";
-import { NewsBlogIcon } from "./assets/icons/news-blog";
 import { ProfileIcon } from "./assets/icons/profile";
-import { SubscriptionIcon } from "./assets/icons/subscription";
+
+import { Alert, AlertIcon, AlertText } from "@/components/ui/alert";
+import { Badge, BadgeIcon, BadgeText } from "@/components/ui/badge";
+import {
+  Building2,
+  CircleAlert,
+  CircleCheck,
+  IdCard,
+  Landmark,
+  User,
+} from "lucide-react-native";
 
 type MobileHeaderProps = {
   title: string;
 };
 
-type HeaderProps = {
-  title: string;
-  toggleSidebar: () => void;
-};
 
-type Icons = {
-  iconName: LucideIcon | typeof Icon;
-  iconText: string;
-};
-const SettingsList: Icons[] = [
-  {
-    iconName: ProfileIcon,
-    iconText: "Profile",
-  },
-  {
-    iconName: SettingsIcon,
-    iconText: "Preferences",
-  },
-  {
-    iconName: SubscriptionIcon,
-    iconText: "Subscription",
-  },
-];
-const ResourcesList: Icons[] = [
-  {
-    iconName: DownloadIcon,
-    iconText: "Downloads",
-  },
-  {
-    iconName: FaqIcon,
-    iconText: "FAQs",
-  },
-  {
-    iconName: NewsBlogIcon,
-    iconText: "News & Blogs",
-  },
-];
+
 type BottomTabs = {
   iconName: LucideIcon | typeof Icon;
   iconText: string;
@@ -171,138 +134,12 @@ const userData: UserStats[] = [
   },
 ];
 
-const Sidebar = () => {
-  const router = useRouter();
-  const [selectedIndex, setSelectedIndex] = useState<number>(0);
-  const [selectedIndexResources, setSelectedIndexResources] =
-    useState<number>(0);
-  const handlePress = (index: number) => {
-    setSelectedIndex(index);
-    // router.push("/profile/profile");
-  };
-  const handlePressResources = (index: number) => {
-    setSelectedIndexResources(index);
-    // router.push("/profile/profile");
-  };
-  return (
-    <ScrollView className=" h-full" contentContainerStyle={{ flexGrow: 1 }}>
-      <VStack
-        className="h-full flex-1 w-[280px] py-4 pr-4 pl-8 items-center border-r border-border-300"
-        space="xl"
-      >
-        <VStack className="w-full px-2 pt-3 pb-4" space="xs">
-          <Text className="text-typography-600 px-4 py-2">SETTINGS</Text>
-          {SettingsList.map((item, index) => {
-            return (
-              <Pressable
-                onPress={() => handlePress(index)}
-                key={index}
-                className={`flex-row px-4 py-3 items-center gap-2 rounded
-              ${
-                index === selectedIndex
-                  ? "bg-background-950 "
-                  : "bg-background-0"
-              }
-              `}
-              >
-                <Icon
-                  as={item.iconName}
-                  className={`
-              ${
-                index === selectedIndex
-                  ? "stroke-background-0 fill-background-800"
-                  : "stroke-background-800 fill-none"
-              }
-              `}
-                />
-                <Text
-                  className={`
-              ${
-                index === selectedIndex
-                  ? "text-typography-0"
-                  : "text-typography-700"
-              }
-
-              `}
-                >
-                  {item.iconText}
-                </Text>
-              </Pressable>
-            );
-          })}
-        </VStack>
-        <VStack className="w-full px-2 pt-3 pb-4" space="xs">
-          <Text className="text-typography-600 px-4 py-2">RESOURCES</Text>
-          {ResourcesList.map((item, index) => {
-            return (
-              <Pressable
-                onPress={() => handlePressResources(index)}
-                key={index}
-                className={`flex-row px-4 py-3 items-center gap-2 rounded
-              ${
-                index === selectedIndexResources
-                  ? "bg-background-950 "
-                  : "bg-background-0"
-              }
-              `}
-              >
-                <Icon
-                  as={item.iconName}
-                  className={`
-              ${
-                index === selectedIndexResources
-                  ? "stroke-background-0"
-                  : "stroke-background-800"
-              }
-              
-              h-10 w-10
-              `}
-                />
-                <Text
-                  className={`
-              ${
-                index === selectedIndexResources
-                  ? "text-typography-0"
-                  : "text-typography-700"
-              }
-
-              `}
-                >
-                  {item.iconText}
-                </Text>
-              </Pressable>
-            );
-          })}
-        </VStack>
-      </VStack>
-    </ScrollView>
-  );
-};
-
 const DashboardLayout = (props: any) => {
-  const [isSidebarVisible, setIsSidebarVisible] = useState(
-    props.isSidebarVisible
-  );
-  function toggleSidebar() {
-    setIsSidebarVisible(!isSidebarVisible);
-  }
-
   return (
     <VStack className="h-full w-full bg-background-0">
-      <Box className="md:hidden">
-        <MobileHeader title={props.title} />
-      </Box>
-      <Box className="hidden md:flex">
-        <WebHeader toggleSidebar={toggleSidebar} title={props.title} />
-      </Box>
-      <VStack className="h-full w-full">
-        <HStack className="h-full w-full">
-          <Box className="hidden md:flex h-full">
-            {isSidebarVisible && <Sidebar />}
-          </Box>
-          <VStack className="w-full flex-1">{props.children}</VStack>
-        </HStack>
-      </VStack>
+      <HStack className="h-full w-full">
+        <VStack className="w-full flex-1">{props.children}</VStack>
+      </HStack>
     </VStack>
   );
 };
@@ -340,27 +177,6 @@ function MobileFooter({ footerIcons }: { footerIcons: any }) {
           );
         }
       )}
-    </HStack>
-  );
-}
-
-function WebHeader(props: HeaderProps) {
-  return (
-    <HStack className="pt-4 pr-10 pb-3 bg-background-0 items-center justify-between border-b border-border-300">
-      <HStack className="items-center">
-        <Pressable
-          onPress={() => {
-            props.toggleSidebar();
-          }}
-        >
-          <Icon as={MenuIcon} size="lg" className="mx-5" />
-        </Pressable>
-        <Text className="text-2xl">{props.title}</Text>
-      </HStack>
-
-      <Avatar className="h-9 w-9">
-        <AvatarFallbackText className="font-light">A</AvatarFallbackText>
-      </Avatar>
     </HStack>
   );
 }
@@ -427,25 +243,63 @@ interface AccountCardType {
   iconName: LucideIcon | typeof Icon;
   subText: string;
   endIcon: LucideIcon | typeof Icon;
+  iconAction?: LucideIcon | typeof Icon;
+  link: string;
 }
 const accountData: AccountCardType[] = [
   {
-    iconName: InboxIcon,
-    subText: "Settings",
+    iconName: User,
+    subText: "Personal Details",
     endIcon: ChevronRightIcon,
+    link: "/(profile)/personal-details",
+    iconAction: CircleCheck,
   },
   {
     iconName: GlobeIcon,
-    subText: "Notifications",
+    subText: "Passport",
     endIcon: ChevronRightIcon,
+    link: "/(profile)/passport",
+    iconAction: CircleAlert,
   },
   {
-    iconName: PhoneIcon,
-    subText: "Rewards",
+    iconName: IdCard,
+    subText: "Driver's License",
     endIcon: ChevronRightIcon,
+    link: "/(profile)/drivers-licence",
+    iconAction: CircleCheck,
+  },
+  {
+    iconName: Landmark,
+    subText: "Bank Account",
+    endIcon: ChevronRightIcon,
+    link: "/(profile)/bank-account-personal",
+    iconAction: CircleCheck,
+  },
+];
+
+const businessSettings: AccountCardType[] = [
+  {
+    iconName: Building2,
+    subText: "Business Details",
+    endIcon: ChevronRightIcon,
+    link: "/(profile)/business-details",
+    
+  },
+  {
+    iconName: Landmark,
+    subText: "Bank Account",
+    endIcon: ChevronRightIcon,
+    link: "/(profile)/passport",
   },
 ];
 const MainContent = () => {
+
+    const navigation = useNavigation();
+  
+    useEffect(() => {
+      navigation.setOptions({ headerShown: false, title: "Profile" });
+    }, [navigation]);
+
   const [showModal, setShowModal] = useState(false);
 
   return (
@@ -459,9 +313,9 @@ const MainContent = () => {
         }}
       >
         <VStack className="h-full w-full pb-8" space="2xl">
-          <Box className="relative w-full md:h-[478px] h-[380px] bg-primary-600">
+          <Box className="relative w-full md:h-[400px] h-[230px] bg-primary-600">
             {/* <Image
-              source={require("@/assets/profile-screens/profile/image2.png")}
+              source={require("@/assets/profile-screens/(profile)/image2.png")}
               height={"100%"}
               width={"100%"}
               alt="Banner Image"
@@ -492,8 +346,12 @@ const MainContent = () => {
                 <Text className="font-roboto text-sm text-typograpphy-700">
                   Australia
                 </Text>
+                <Badge size="md" variant="solid" action="success">
+                  <BadgeText>Verified</BadgeText>
+                  <BadgeIcon as={BadgeCheck} className="ml-2" />
+                </Badge>
               </VStack>
-              <>
+              {/* <>
                 {userData.map((item, index) => {
                   return (
                     <HStack className="items-center gap-1" key={index}>
@@ -535,8 +393,8 @@ const MainContent = () => {
                     </HStack>
                   );
                 })}
-              </>
-              <Button
+              </> */}
+              {/* <Button
                 variant="outline"
                 action="secondary"
                 onPress={() => setShowModal(true)}
@@ -544,11 +402,16 @@ const MainContent = () => {
               >
                 <ButtonText className="text-dark">Edit Profile</ButtonText>
                 <ButtonIcon as={EditIcon} />
-              </Button>
+              </Button> */}
             </VStack>
           </Center>
           <VStack className="mx-6" space="2xl">
-            <HStack
+            <Alert action="error" variant="solid">
+              <AlertIcon as={CircleAlert} />
+              <AlertText>Passport expired. Update required.</AlertText>
+            </Alert>
+
+            {/* <HStack
               className="py-5 px-6 border rounded-xl border-border-300 justify-between items-center"
               space="2xl"
             >
@@ -575,24 +438,52 @@ const MainContent = () => {
                   Invite
                 </ButtonText>
               </Button>
-            </HStack>
+            </HStack> */}
             <Heading className="font-roboto" size="xl">
-              Account
+              Personal Information
             </Heading>
-            <VStack className="py-2 px-4 border rounded-xl border-border-300 justify-between items-center">
+            <VStack className="py-2 px-4 justify-between items-center">
               {accountData.map((item, index) => {
                 return (
                   <React.Fragment key={index}>
-                    <HStack
-                      space="2xl"
-                      className="justify-between items-center w-full flex-1 py-3 px-2"
-                    >
-                      <HStack className="items-center" space="md">
-                        <Icon as={item.iconName} className="stroke-[#747474]" />
-                        <Text size="lg">{item.subText}</Text>
+                    <Link href={item.link as any} className="color-white">
+                      <HStack
+                        space="2xl"
+                        className="justify-between items-center w-full flex-1 py-3 px-2"
+                        key={index}
+                      >
+                        <HStack className="items-center" space="md">
+                          {/* <Icon
+                            as={CircleCheck}
+                            className="outline-emerald-500"
+                          />
+
+                          <Divider
+                            orientation="vertical"
+                            className="mx-2 h-[20px]  "
+                          /> */}
+
+                          <Icon
+                            as={item.iconName}
+                            className="stroke-[#747474]"
+                          />
+                          <Text size="lg">{item.subText}</Text>
+                        </HStack>
+                        <HStack>
+                          <Icon
+                            as={item.iconAction}
+                            className="color-[#77bb41] h-5 w-5"
+                          />
+                          {/* <CircleAlert color="#77bb41" /> */}
+                          {/* 
+                          <Divider
+                            orientation="vertical"
+                            className="mx-2 h-[20px]  "
+                            /> */}
+                          <Icon as={item.endIcon} />
+                        </HStack>
                       </HStack>
-                      <Icon as={item.endIcon} />
-                    </HStack>
+                    </Link>
                     {accountData.length - 1 !== index && (
                       <Divider className="my-1" />
                     )}
@@ -601,23 +492,45 @@ const MainContent = () => {
               })}
             </VStack>
             <Heading className="font-roboto" size="xl">
-              Preferences
+              Business Information
             </Heading>
-            <VStack className="py-2 px-4 border rounded-xl border-border-300 justify-between items-center">
-              {accountData.map((item, index) => {
+            <VStack className="py-2 px-4 justify-between items-center">
+              {businessSettings.map((item, index) => {
                 return (
                   <React.Fragment key={index}>
-                    <HStack
-                      space="2xl"
-                      className="justify-between items-center w-full flex-1 py-3 px-2"
-                      key={index}
-                    >
-                      <HStack className="items-center" space="md">
-                        <Icon as={item.iconName} className="stroke-[#747474]" />
-                        <Text size="lg">{item.subText}</Text>
+                    <Link href={item.link as any} className="color-white">
+                      <HStack
+                        space="2xl"
+                        className="justify-between items-center w-full flex-1 py-3 px-2"
+                        key={index}
+                      >
+                        <HStack className="items-center" space="md">
+                          {/* <Icon
+                            as={CircleCheck}
+                            className="outline-emerald-500"
+                          />
+
+                          <Divider
+                            orientation="vertical"
+                            className="mx-2 h-[20px]  "
+                          /> */}
+
+                          <Icon
+                            as={item.iconName}
+                            className="stroke-[#747474]"
+                          />
+                          <Text size="lg">{item.subText}</Text>
+                        </HStack>
+                        <HStack>
+                          {/* <Icon
+                            as={Pencil}
+                            // className="color-[#77bb41] h-5 w-5"
+                            className="h-5 w-4"
+                          /> */}
+                          <Icon as={item.endIcon} />
+                        </HStack>
                       </HStack>
-                      <Icon as={item.endIcon} />
-                    </HStack>
+                    </Link>
                     {accountData.length - 1 !== index && (
                       <Divider className="my-1" />
                     )}
@@ -1086,9 +999,6 @@ const ModalComponent = ({
   };
 
   return (
-
-
-    
     <Modal
       isOpen={showModal}
       onClose={() => {
@@ -1535,7 +1445,7 @@ const ModalComponent = ({
 export const Profile = () => {
   return (
     <SafeAreaView className="h-full w-full">
-      <DashboardLayout title="Company Name" isSidebarVisible={true}>
+      <DashboardLayout isSidebarVisible={false}>
         <MainContent />
       </DashboardLayout>
       <MobileFooter footerIcons={bottomTabsList} />

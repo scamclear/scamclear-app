@@ -4,14 +4,17 @@
     "slug": "scamclear",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/images/logo-scam-clear.png",
+    "icon": "./assets/images/icon.png",
     "scheme": "scamclearapp",
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
     "ios": {
       "supportsTablet": true,
       "usesIcloudStorage": true,
-      "bundleIdentifier": "com.root.scamclear.scamclearapp"
+      "bundleIdentifier": "com.root.scamclear.scamclearapp",
+      "infoPlist": {
+        "ITSAppUsesNonExemptEncryption": false
+      }
     },
     "android": {
       "adaptiveIcon": {
@@ -65,7 +68,7 @@
           "launchMode": "most-recent"
         }
       ],
-      "expo-font"
+      "expo-font"      
     ],
     "experiments": {
       "typedRoutes": true

@@ -1,15 +1,13 @@
 import { useEffect, useState } from "react";
-import { Alert, StyleSheet, View } from "react-native";
+import { Alert, SafeAreaView, StyleSheet, View } from "react-native";
 
 import { supabase } from "@/lib/supabase";
 import { Session } from "@supabase/supabase-js";
-import { Image } from "expo-image";
 
-import ParallaxScrollView from "@/components/ParallaxScrollView";
-import { ThemedText } from "@/components/ThemedText";
-import { ThemedView } from "@/components/ThemedView";
 import { Button, ButtonText } from "@/components/ui/button";
+import { Heading } from "@/components/ui/heading";
 import { Input, InputField } from "@/components/ui/input";
+import { VStack } from "@/components/ui/vstack";
 
 export default function SettingsScreen() {
   const [, setLoading] = useState(true);
@@ -59,14 +57,18 @@ export default function SettingsScreen() {
   }
 
   return (
-    <ParallaxScrollView
-      headerBackgroundColor={{ light: "#A1CEDC", dark: "#1D3D47" }}
-      headerImage={
-        <Image source={require("@/assets/images/partial-react-logo.png")} />
-      }
-    >
-      <ThemedView style={styles.container}>
-        <ThemedText type="title">Settings</ThemedText>
+    // <ParallaxScrollView
+    //   headerBackgroundColor={{ light: "#A1CEDC", dark: "#1D3D47" }}
+    //   headerImage={
+    //     <Image source={require("@/assets/images/partial-react-logo.png")} />
+    //   }
+    // >
+
+    <SafeAreaView>
+      <VStack className="w-full  p-4">
+        <Heading size="3xl" className="mb-6">
+          Settings
+        </Heading>
         <View style={styles.container}>
           <View style={[styles.verticallySpaced, styles.mt20]}>
             <Input
@@ -114,8 +116,9 @@ export default function SettingsScreen() {
             </Button>
           </View>
         </View>
-      </ThemedView>
-    </ParallaxScrollView>
+      </VStack>
+    </SafeAreaView>
+    // </ParallaxScrollView>
   );
 }
 

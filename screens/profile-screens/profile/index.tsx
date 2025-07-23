@@ -289,7 +289,7 @@ const businessSettings: AccountCardType[] = [
     iconName: Landmark,
     subText: "Bank Account",
     endIcon: ChevronRightIcon,
-    link: "/(profile)/passport",
+    link: "/(profile)/bank-account-business",
   },
 ];
 const MainContent = () => {

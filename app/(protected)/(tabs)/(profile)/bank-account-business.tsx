@@ -26,17 +26,17 @@ import {
 import { VStack } from "@/components/ui/vstack";
 import DateTimePicker from "@react-native-community/datetimepicker";
 import { useNavigation } from "expo-router";
-import { CircleUserRound } from "lucide-react-native";
+import { CreditCard } from "lucide-react-native";
 import React, { useEffect } from "react";
 
-export default function Passport() {
+export default function BankAccountBusiness() {
   const navigation = useNavigation();
 
   useEffect(() => {
-    navigation.setOptions({ headerShown: true, title: "Personal Details" });
+    navigation.setOptions({ headerShown: true, title: "Bank Account" });
   }, [navigation]);
 
-  const [date, ] = React.useState(new Date(Date.now()));
+  const [date] = React.useState(new Date(Date.now()));
   const [isInvalid, setIsInvalid] = React.useState(false);
   const [inputValue, setInputValue] = React.useState("12345");
   const handleSubmit = () => {
@@ -49,61 +49,17 @@ export default function Passport() {
   return (
     <VStack className="w-full  p-4">
       <HStack className="justify-center items-center mb-6">
-        <CircleUserRound color="grey" size={200} strokeWidth={0.25} />
+        <CreditCard color="grey" size={200} strokeWidth={0.25} />
       </HStack>
-      <FormControl size="md" isRequired={false}>
+      <FormControl
+        isInvalid={isInvalid}
+        size="md"
+        // isDisabled={false}
+        // isReadOnly={false}
+        isRequired={false}
+      >
         <FormControlLabel>
-          <FormControlLabelText>Given name</FormControlLabelText>
-        </FormControlLabel>
-        <Input className="my-1">
-          <InputField
-            type="text"
-            // placeholder="password"
-            value={inputValue}
-            onChangeText={(text) => setInputValue(text)}
-          />
-        </Input>
-        <FormControlHelper>
-          {/* <FormControlHelperText>
-            Must be atleast 6 characters.
-          </FormControlHelperText> */}
-        </FormControlHelper>
-        <FormControlError>
-          <FormControlErrorIcon as={AlertCircleIcon} />
-          <FormControlErrorText>
-            Atleast 6 characters are required.
-          </FormControlErrorText>
-        </FormControlError>
-      </FormControl>
-
-      <FormControl size="md" isRequired={false}>
-        <FormControlLabel>
-          <FormControlLabelText>Middle name</FormControlLabelText>
-        </FormControlLabel>
-        <Input className="my-1">
-          <InputField
-            type="text"
-            // placeholder="password"
-            value={inputValue}
-            onChangeText={(text) => setInputValue(text)}
-          />
-        </Input>
-        <FormControlHelper>
-          {/* <FormControlHelperText>
-            Must be atleast 6 characters.
-          </FormControlHelperText> */}
-        </FormControlHelper>
-        <FormControlError>
-          <FormControlErrorIcon as={AlertCircleIcon} />
-          <FormControlErrorText>
-            Atleast 6 characters are required.
-          </FormControlErrorText>
-        </FormControlError>
-      </FormControl>
-
-      <FormControl size="md" isRequired={false}>
-        <FormControlLabel>
-          <FormControlLabelText>Surname</FormControlLabelText>
+          <FormControlLabelText>BSB</FormControlLabelText>
         </FormControlLabel>
         <Input className="my-1">
           <InputField
@@ -134,7 +90,7 @@ export default function Passport() {
         isRequired={false}
       >
         <FormControlLabel>
-          <FormControlLabelText>Country Issued</FormControlLabelText>
+          <FormControlLabelText>Account number</FormControlLabelText>
         </FormControlLabel>
 
         <Select>
@@ -167,20 +123,20 @@ export default function Passport() {
       </FormControl>
 
       <FormControl
-        isInvalid={isInvalid}
+        // isInvalid={isInvalid}
         size="md"
-        isDisabled={false}
+        // isDisabled={false}
         isReadOnly={false}
         isRequired={false}
       >
         <FormControlLabel>
-          <FormControlLabelText>Date of birth</FormControlLabelText>
+          <FormControlLabelText>Expiry Date</FormControlLabelText>
         </FormControlLabel>
         <DateTimePicker
           testID="dateTimePicker"
           value={date}
           mode="date"
-          maximumDate={new Date(Date.now() - 567648000000)} // 18 years ago
+          minimumDate={new Date(Date.now())}
           // onChange={onChange}
         />
         <FormControlHelper>

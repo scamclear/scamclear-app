@@ -9,6 +9,7 @@ export default function ProfileLayout() {
       <Stack.Screen name="personal-details" />
       <Stack.Screen name="drivers-licence" />
       <Stack.Screen name="bank-account-personal" />
+      <Stack.Screen name="bank-account-business" />
     </Stack>
   );
 }

@@ -39,7 +39,7 @@ export default function BusinessDetails() {
   
 
 
-  const [date, setDate] = React.useState(new Date(Date.now()));
+  const [date, ] = React.useState(new Date(Date.now()));
   const [isInvalid, setIsInvalid] = React.useState(false);
   const [inputValue, setInputValue] = React.useState("12345");
   const handleSubmit = () => {

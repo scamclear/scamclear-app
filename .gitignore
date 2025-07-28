@@ -11,6 +11,7 @@ web-build/
 expo-env.d.ts
 ios/certs/*
 ios/
+android/
 
 # Native
 .kotlin/

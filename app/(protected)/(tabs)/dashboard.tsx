@@ -11,6 +11,7 @@ import { Button, ButtonGroup, ButtonText } from "@/components/ui/button";
 import { Heading } from "@/components/ui/heading";
 import { HStack } from "@/components/ui/hstack";
 import { CloseIcon, Icon, InfoIcon } from "@/components/ui/icon";
+// import { Image } from "@/components/ui/image";
 import { Pressable } from "@/components/ui/pressable";
 import { Text } from "@/components/ui/text";
 import { Image, SafeAreaView, ScrollView } from "react-native";
@@ -72,6 +73,8 @@ export default function Dashboard() {
     console.log(result);
 
     if (result.assets && result.assets.length > 0) {
+      setText("  ");
+      setUploading(true);
       setImage(result.assets[0].uri);
       console.log("Selected image:", image);
       //   const kkresult = await PhotoRecognizer({
@@ -132,7 +135,8 @@ export default function Dashboard() {
             Selected Image
           </Heading>
           <Image
-            // className="h-64 w-full object-contain flex"
+          //  size="xl"
+            // className="h-64 w-full object-contain "
             style={{ width: "100%", height: 250, objectFit: "contain" }}
             source={{
               uri:

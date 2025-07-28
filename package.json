@@ -10,7 +10,9 @@
     "android": "DARK_MODE=media expo start --android",
     "ios": "DARK_MODE=media expo start --ios",
     "web": "DARK_MODE=media expo start --web",
-    "lint": "expo lint"
+    "lint": "expo lint",
+    "check": "expo install --check",
+    "fix": "expo install --fix"
   },
   "dependencies": {
     "@expo/html-elements": "0.4.2",
@@ -119,8 +121,17 @@
     "@types/react": "~19.0.10",
     "eslint": "^9.25.0",
     "eslint-config-expo": "~9.2.0",
+    "expo-modules-core": "^2.5.0",
     "jscodeshift": "0.15.2",
     "typescript": "~5.8.3"
+  },
+  "peerDependencies": {
+    "expo": "*"
+  },
+  "peerDependenciesMeta": {
+    "expo": {
+      "optional": true
+    }
   },
   "expo": {
     "install": {

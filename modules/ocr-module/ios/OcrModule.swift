@@ -20,10 +20,7 @@ public class OcrModule: Module {
     // Events("onChange")
 
     // // Defines a JavaScript synchronous function that runs the native code on the JavaScript thread.
-    // Function("hello") {
-    //   return "Hello world! 👋"
-    // }
-
+  
     // Defines a JavaScript function that always returns a Promise and whose native code
     // is by default dispatched on the different thread than the JavaScript runtime runs on.
     AsyncFunction("recognizeTextAsync") { (uriString: String) -> String in

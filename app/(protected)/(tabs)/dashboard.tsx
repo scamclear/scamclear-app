@@ -14,19 +14,27 @@ import { CloseIcon, Icon, InfoIcon } from "@/components/ui/icon";
 // import { Image } from "@/components/ui/image";
 import { Pressable } from "@/components/ui/pressable";
 import { Text } from "@/components/ui/text";
-import { Image, SafeAreaView, ScrollView } from "react-native";
+import {
+  Image,
+  SafeAreaView,
+  ScrollView,
+  TouchableOpacity,
+  View,
+} from "react-native";
 // import { View } from "@/components/ui/view";
+import { Alert, AlertIcon, AlertText } from "@/components/ui/alert";
 import { VStack } from "@/components/ui/vstack";
-import UploadInvoice from "@/components/UploadInvoice";
 import * as DocumentPicker from "expo-document-picker";
 import * as ImagePicker from "expo-image-picker";
 
+import UploadInvoice from "@/components/UploadInvoice";
+
 // import { Image } from "expo-image";
 // import * as ImagePicker from "expo-image-picker";
-import { Alert, AlertIcon, AlertText } from "@/components/ui/alert";
 import OcrModule from "@/modules/ocr-module";
 import Tesseract from "tesseract.js";
 
+import { CameraType, CameraView, useCameraPermissions } from "expo-camera";
 // import { detectText } from 'react-native-vision-camera-text-detector';
 
 export default function Dashboard() {
@@ -34,6 +42,9 @@ export default function Dashboard() {
   const [loading, setLoading] = React.useState<boolean>(false);
   const [image, setImage] = useState<string | null>(null);
   const [textOcr, setText] = useState<string | null>(null);
+
+  const [facing, setFacing] = useState<CameraType>("back");
+  const [permission, requestPermission] = useCameraPermissions();
 
   const [showActionsheet, setShowActionsheet] = React.useState(false);
   const [, setUploading] = useState(false);
@@ -125,6 +136,28 @@ export default function Dashboard() {
     setLoading(false);
   };
 
+  function toggleCameraFacing() {
+    setFacing((current) => (current === "back" ? "front" : "back"));
+  }
+
+  if (!permission) {
+    // Camera permissions are still loading.
+    return <View />;
+  }
+
+  if (!permission.granted) {
+    // Camera permissions are not granted yet.
+    return (
+      <SafeAreaView className="flex-1">
+        <VStack className="flex-1 justify-center items-center">
+          <Button onPress={requestPermission} size="lg" className="w-full">
+            <ButtonText>Permission requested to show the camera</ButtonText>
+          </Button>
+        </VStack>
+      </SafeAreaView>
+    );
+  }
+
   return (
     <SafeAreaView className="flex-1">
       <ScrollView scrollsToTop={snapToStart} className="mb-16 ">
@@ -135,7 +168,7 @@ export default function Dashboard() {
             Selected Image
           </Heading>
           <Image
-          //  size="xl"
+            //  size="xl"
             // className="h-64 w-full object-contain "
             style={{ width: "100%", height: 250, objectFit: "contain" }}
             source={{
@@ -195,7 +228,15 @@ export default function Dashboard() {
           </Button>
         </HStack> */}
         </VStack>
+      <CameraView facing={facing} className="flex-1 h-3/6" style={{ width: '100%', height: 360 }}>
+        <VStack className="flex-1 justify-center items-center">
+          <TouchableOpacity onPress={toggleCameraFacing}>
+            <Text>Flip Camera</Text>
+          </TouchableOpacity>
+        </VStack>
+      </CameraView>
       </ScrollView>
+
       <Actionsheet isOpen={showActionsheet} onClose={handleClose}>
         <ActionsheetBackdrop />
         <ActionsheetContent className="px-5">
@@ -255,17 +296,6 @@ export default function Dashboard() {
           </ButtonGroup>
         </ActionsheetContent>
       </Actionsheet>
-
-      {/* <CameraView facing={facing} className="flex-1">
-        <VStack className="flex-1 justify-center items-center">
-          <TouchableOpacity onPress={toggleCameraFacing}>
-            <Text>Flip Camera</Text>
-          </TouchableOpacity>
-        </VStack>
-      </CameraView> */}
     </SafeAreaView>
   );
-}
-function PhotoRecognizer(arg0: { uri: any; orientation: string }) {
-  throw new Error("Function not implemented.");
 }

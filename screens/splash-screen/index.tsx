@@ -6,50 +6,41 @@ import { Image, StyleSheet } from "react-native";
 import { useRouter } from "@unitools/router";
 import { AuthLayout } from "../layout";
 
-const SplashScreenWithLeftBackground = () => {
+export const SplashScreen = () => {
   const router = useRouter();
   const { colorScheme } = useColorScheme();
   return (
-    <VStack
-      className="w-full max-w-[440px] items-center h-full justify-center"
-      space="lg"
-    >
-      {colorScheme === "dark" ? (
-        <Image
-          style={styles.tinyLogo}
-          source={require("@/assets/images/logo-scam-clear.png")}
-        />
-      ) : (
-        <Image
-          style={styles.tinyLogo}
-          source={require("@/assets/images/logo-scam-clear.png")}
-        />
-      )}
-      <VStack className="w-full" space="lg">
-        <Button
-          className="w-full"
-          onPress={() => {
-            router.push("/auth/signin");
-          }}
-        >
-          <ButtonText className="font-medium">Log in</ButtonText>
-        </Button>
-        <Button
-          onPress={() => {
-            router.push("/auth/signup");
-          }}
-        >
-          <ButtonText className="font-medium">Sign Up</ButtonText>
-        </Button>
-      </VStack>
-    </VStack>
-  );
-};
-
-export const SplashScreen = () => {
-  return (
     <AuthLayout>
-      <SplashScreenWithLeftBackground />
+      <VStack className="w-full items-center h-full justify-center" space="lg">
+        {colorScheme === "dark" ? (
+          <Image
+            style={styles.tinyLogo}
+            source={require("@/assets/images/logo-scam-clear.png")}
+          />
+        ) : (
+          <Image
+            style={styles.tinyLogo}
+            source={require("@/assets/images/logo-scam-clear.png")}
+          />
+        )}
+        <VStack className="w-full" space="lg">
+          <Button
+            className="w-full"
+            onPress={() => {
+              router.push("/auth/signin");
+            }}
+          >
+            <ButtonText className="font-medium">Log in</ButtonText>
+          </Button>
+          <Button
+            onPress={() => {
+              router.push("/auth/signup");
+            }}
+          >
+            <ButtonText className="font-medium">Sign Up</ButtonText>
+          </Button>
+        </VStack>
+      </VStack>
     </AuthLayout>
   );
 };
@@ -60,7 +51,7 @@ const styles = StyleSheet.create({
   },
   tinyLogo: {
     width: 50,
-    height: 50,
+    height: 66,
   },
   logo: {
     width: 66,
